@@ -22,11 +22,16 @@ def test_chat_completion_retries(monkeypatch):
             self.choices = [type("Obj", (), {"message": type("Obj", (), {"content": "hi"})()})]
             self.usage = {"prompt_tokens": 1, "completion_tokens": 2}
 
+    captured_headers = {}
+
     class DummyCompletions:
         def __init__(self):
             self.calls = 0
 
-        def create(self, model, messages, max_tokens):
+        def create(self, model, messages, max_tokens, **kwargs):
+            assert model == "openai/gpt-5-nano"
+            captured_headers["value"] = kwargs.get("extra_headers")
+            assert kwargs.get("extra_body") == {"max_output_tokens": max_tokens}
             self.calls += 1
             if self.calls == 1:
                 raise JSONDecodeError("Err", "", 0)
@@ -45,3 +50,7 @@ def test_chat_completion_retries(monkeypatch):
 
     result = llm.chat_completion("hi")
     assert result == {"message": "hi", "usage": {"prompt_tokens": 1, "completion_tokens": 2}}
+    assert captured_headers["value"] == {
+        "HTTP-Referer": "https://github.com/gavellm",
+        "X-Title": "gavellm",
+    }
