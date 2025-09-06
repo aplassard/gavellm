@@ -9,7 +9,7 @@ from json import JSONDecodeError
 import httpx
 from openai import OpenAI
 
-MODEL_NAME = os.getenv("MODEL_NAME", "openai/gpt-oss-20b")
+MODEL_NAME = os.getenv("MODEL_NAME", "openai/gpt-5-nano")
 
 
 def _ensure_env() -> None:
@@ -58,6 +58,11 @@ def chat_completion(
                 model=target_model,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=max_tokens,
+                extra_body={"max_output_tokens": max_tokens},
+                extra_headers={
+                    "HTTP-Referer": "https://github.com/gavellm",
+                    "X-Title": "gavellm",
+                },
             )
             break
         except (JSONDecodeError, httpx.HTTPError) as exc:  # pragma: no cover - network
@@ -65,5 +70,10 @@ def chat_completion(
                 raise RuntimeError("Failed to retrieve completion") from exc
             time.sleep(2**attempt)
     assert completion is not None  # for type checkers
-
-    return completion.choices[0].message.content,
+    usage = getattr(completion, "usage", None)
+    if hasattr(usage, "model_dump"):
+        usage = usage.model_dump()
+    return {
+        "message": completion.choices[0].message.content,
+        "usage": usage,
+    }
