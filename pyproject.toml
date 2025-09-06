@@ -4,8 +4,17 @@ version = "0.1.0"
 description = "Open source LLM-as-a-judge"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "httpx>=0.28.1",
+    "openai>=1.106.1",
+    "python-dotenv>=1.1.1",
+]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]

@@ -65,5 +65,10 @@ def chat_completion(
                 raise RuntimeError("Failed to retrieve completion") from exc
             time.sleep(2**attempt)
     assert completion is not None  # for type checkers
-
-    return completion.choices[0].message.content,
+    usage = getattr(completion, "usage", None)
+    if hasattr(usage, "model_dump"):
+        usage = usage.model_dump()
+    return {
+        "message": completion.choices[0].message.content,
+        "usage": usage,
+    }
