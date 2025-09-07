@@ -22,3 +22,22 @@ management. To get started:
    ```
 
 Project code lives in `src/gavellm/`.
+
+## Usage
+
+Two starter judge tasks are provided:
+
+* **Groundedness** – determine whether an answer is supported by context snippets.
+* **Format compliance** – check if a candidate output follows structural constraints.
+
+Run judgments via the CLI:
+
+```bash
+uv run python -m cli.gavellm \
+  --task groundedness \
+  --cases tasks/groundedness.sample.jsonl \
+  --mode RULES_ONLY \
+  --out out/groundedness.jsonl
+```
+
+Sample cases for each task live in `tasks/` and prompts in `prompts/`.
