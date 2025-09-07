@@ -1,0 +1,9 @@
+id: format_compliance_v1
+version: "1"
+system: |
+  You check if a candidate output follows instructions and constraints.
+user: |
+  Instruction: {{ instruction }}
+  Constraints: {{ constraints }}
+  Candidate: {{ candidate }}
+  Return JSON: {"compliant": bool, "violations": list, "explanation": str}

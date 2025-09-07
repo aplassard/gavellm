@@ -1,0 +1,5 @@
+{"id": "1", "instruction": "Respond in JSON with fields name and age.", "constraints": {"json_schema": {"type": "object", "properties": {"name": {"type": "string"}, "age": {"type": "number"}}, "required": ["name", "age"]}}, "candidate": "{\"name\": \"Alice\", \"age\": 30}"}
+{"id": "2", "instruction": "Respond in JSON with field name only.", "constraints": {"json_schema": {"type": "object", "properties": {"name": {"type": "string"}}, "required": ["name"]}, "banned_phrases": ["error"]}, "candidate": "{\"name\": \"Bob\", \"age\": 20}"}
+{"id": "3", "instruction": "Write 'hello' exactly twice.", "constraints": {"required_count": {"word": "hello", "count": 2}}, "candidate": "hello hello"}
+{"id": "4", "instruction": "Include a greeting that matches regex 'hi|hello'.", "constraints": {"regex": {"greeting": "hi|hello"}}, "candidate": "goodbye"}
+{"id": "5", "instruction": "Avoid banned word 'foo'.", "constraints": {"banned_phrases": ["foo"]}, "candidate": "bar"}

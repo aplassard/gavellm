@@ -1,0 +1,5 @@
+{"id": "1", "context_snippets": ["Paris is the capital of France.", "Berlin is Germany's capital."], "answer": "Paris is the capital of France."}
+{"id": "2", "context_snippets": ["The sky is blue."], "answer": "The sky is green."}
+{"id": "3", "context_snippets": ["Cats purr when happy.", "Dogs bark."], "answer": "Cats purr and dogs bark."}
+{"id": "4", "context_snippets": ["Water boils at 100C."], "answer": "Water freezes at 0C."}
+{"id": "5", "context_snippets": ["Mount Everest is the tallest mountain."], "answer": "Mount Everest is the tallest mountain in the world."}

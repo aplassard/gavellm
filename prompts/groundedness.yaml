@@ -1,0 +1,12 @@
+id: groundedness_v1
+version: "1"
+system: |
+  You judge whether an answer is supported by the context snippets.
+user: |
+  Context:
+  {{ context_snippets | join('\n') }}
+
+  Answer:
+  {{ answer }}
+
+  Respond with JSON: {"supported": bool, "support_ratio": float, "missing_citations": list, "explanation": str}
